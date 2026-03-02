@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../utils/web_helper.dart';
 
 class HeaderSection extends StatelessWidget {
@@ -32,29 +34,82 @@ class HeaderSection extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 20),
       color: Colors.blueGrey[900],
       width: double.infinity,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text('Sahil Garg',
-              style: TextStyle(
-                  fontSize: 48,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white)),
-          const SizedBox(height: 8),
-          const Text('Senior Flutter Developer',
-              style: TextStyle(fontSize: 24, color: Colors.white70)),
-          const SizedBox(height: 24),
-          Wrap(
-            spacing: 12,
+      child: LayoutBuilder(builder: (context, constraints) {
+        final isWide = constraints.maxWidth > 800;
+        final name = Text('Sahil Garg',
+            style: GoogleFonts.poppins(
+                fontSize: 48, fontWeight: FontWeight.w700, color: Colors.white));
+
+        final role = Text('Senior Flutter Developer',
+            style: GoogleFonts.inter(fontSize: 20, color: Colors.white70));
+
+        final summary = Text(
+            'Senior Flutter Developer with over 5 years building scalable cross-platform apps. UI-driven, animation-focused, and comfortable on web & mobile.',
+            style: GoogleFonts.inter(color: Colors.white70, fontSize: 16));
+
+        final ctas = Wrap(
+          spacing: 12,
+          children: [
+            ElevatedButton(onPressed: _openResume, child: const Text('Download CV')),
+            OutlinedButton(onPressed: _launchEmail, child: const Text('Contact')),
+          ],
+        );
+
+        final avatar = Center(
+          child: SizedBox(
+            width: isWide ? 260 : 160,
+            height: isWide ? 260 : 160,
+            child: ClipOval(
+              child: SizedBox(
+                width: isWide ? 260 : 160,
+                height: isWide ? 260 : 160,
+                child: SvgPicture.asset(
+                  'assets/profile.svg',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+        );
+
+        if (isWide) {
+          return Row(
             children: [
-              ElevatedButton(
-                  onPressed: _openResume, child: const Text('Download CV')),
-              OutlinedButton(
-                  onPressed: _launchEmail, child: const Text('Contact')),
+              Expanded(
+                flex: 6,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    name,
+                    const SizedBox(height: 8),
+                    role,
+                    const SizedBox(height: 20),
+                    summary,
+                    const SizedBox(height: 24),
+                    ctas,
+                  ],
+                ),
+              ),
+              Expanded(flex: 4, child: avatar),
             ],
-          )
-        ],
-      ),
+          );
+        }
+
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            name,
+            const SizedBox(height: 8),
+            role,
+            const SizedBox(height: 16),
+            avatar,
+            const SizedBox(height: 16),
+            summary,
+            const SizedBox(height: 20),
+            ctas,
+          ],
+        );
+      }),
     );
   }
 }

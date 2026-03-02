@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class SkillsSection extends StatelessWidget {
   const SkillsSection({super.key});
@@ -30,19 +31,27 @@ class SkillsSection extends StatelessWidget {
     ];
 
     return Container(
-      padding: const EdgeInsets.all(20),
+      padding: const EdgeInsets.symmetric(vertical: 60, horizontal: 24),
       color: Colors.grey[100],
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Tech Skills',
-              style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
-          const SizedBox(height: 12),
+          Text('Tech Skills',
+              style: GoogleFonts.poppins(
+                  fontSize: 36, fontWeight: FontWeight.w700)),
+          const SizedBox(height: 24),
           Wrap(
-            spacing: 8,
-            runSpacing: 8,
+            spacing: 12,
+            runSpacing: 12,
             children: skills
-                .map((s) => Chip(label: Text(s)))
+                .map((s) => Chip(
+                      label: Text(s,
+                          style: GoogleFonts.inter(
+                              fontSize: 14, fontWeight: FontWeight.w500)),
+                      backgroundColor: Colors.blueGrey.shade200,
+                      labelPadding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 8),
+                    ))
                 .toList(),
           ),
         ],
