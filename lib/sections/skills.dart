@@ -27,6 +27,7 @@ class SkillsSection extends StatelessWidget {
       'React with TypeScript (Basic)',
       'Figma (basic)',
       'App Deployment (Play/App Store)',
+      'GitHub Actions',
     ];
 
     return Container(
